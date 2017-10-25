@@ -14,7 +14,7 @@ include "vendor/autoload.php";
 
 use SZonov\Sberbank\PdfAccountStatement\Statement;
 
-$statement = new Statement(__DIR__ . 'выписка.pdf');
+$statement = new Statement(__DIR__ . '/выписка.pdf');
 
 echo "АККАУНТ: {$statement->account}\n";
 
