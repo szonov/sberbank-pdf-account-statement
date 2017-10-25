@@ -278,33 +278,22 @@ class Parser implements ParserInterface
      */
     protected function rowToPayment($row)
     {
-        $t = new Payment();
-        $t
-            ->setDate($row[0])
-            ->setSum($row[3])
-            ->setNo($row[4])
-            ->setVo($row[5])
-            ->setBik($row[6][0])
-            ->setBank($row[6][1])
-            ->setPurpose($row[7])
-        ;
+        $direction = ($this->getAccount() == $row[1][0]) ? Payment::OUT : Payment::IN;
+        $contractor = ($direction === Payment::OUT) ? $row[2] : $row[1];
 
-        if ($this->getAccount() == $row[1][0]) {
-            // исходящий
-            $contractor = $row[2];
-            $direction = Payment::OUT;
-        } else {
-            // входящий
-            $contractor = $row[1];
-            $direction = Payment::IN;
-        }
-        $t
-            ->setDirection($direction)
-            ->setAccount($contractor[0])
-            ->setInn($contractor[1])
-            ->setName($contractor[2]);
-
-        return $t;
+        return new Payment(array(
+            'direction' => $direction,
+            'date' => $row[0],
+            'sum' => $row[3],
+            'no' => $row[4],
+            'vo' => $row[5],
+            'bik' => $row[6][0],
+            'bank' => $row[6][1],
+            'purpose' => $row[7],
+            'account' => $contractor[0],
+            'inn' => $contractor[1],
+            'name' => $contractor[2]
+        ));
     }
 
     protected function companyInfo($value)

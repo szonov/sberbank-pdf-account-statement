@@ -52,14 +52,14 @@ class Statistic
         foreach ($this->statement->payments as $item) {
             $this->_cache['op_total']++;
 
-            if ($item->getDirection() === Payment::IN) {
+            if ($item->direction === Payment::IN) {
                 $this->_cache['op_in']++;
-                $this->_cache['in'] += $item->getSum();
-                $this->_cache['balance'] += $item->getSum();
+                $this->_cache['in'] += $item->sum;
+                $this->_cache['balance'] += $item->sum;
             } else {
                 $this->_cache['op_out']++;
-                $this->_cache['out'] += $item->getSum();
-                $this->_cache['balance'] -= $item->getSum();
+                $this->_cache['out'] += $item->sum;
+                $this->_cache['balance'] -= $item->sum;
             }
         }
         return $this;
