@@ -252,7 +252,7 @@ class Parser implements ParserInterface
         {
             $value = $this->textValueTransform($row[$index++]);
 
-            if (preg_match('/^БИК (\d+),? (.+)$/', $value, $regs))
+            if (preg_match('/^БИК (\d+),?(.*)$/', $value, $regs))
             {
                 $bik_found = true;
 
@@ -261,7 +261,7 @@ class Parser implements ParserInterface
                 $ret[] = isset($a[1]) ? $a[1] : '';
 
                 // [LAST-1] Банк (БИК и наименование)
-                $ret[] = array($regs[1], $regs[2]);
+                $ret[] = array($regs[1], trim($regs[2]));
 
                 // [LAST] Назначение платежа
                 $ret[] = $this->textValueTransform($row[$index]);
